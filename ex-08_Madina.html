@@ -200,43 +200,9 @@ dbl (11): Social_learning, Research_effort, ECV, Group_size, Gestation, Wean...
 #   Sex_maturity &lt;dbl&gt;, Body_mass &lt;dbl&gt;, Maternal_investment &lt;dbl&gt;,
 #   Repro_lifespan &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Species          Taxonomic_group    Social_learning Research_effort 
- Length:301         Length:301         Min.   :  0.0   Min.   :  1.00  
- Class :character   Class :character   1st Qu.:  0.0   1st Qu.:  6.00  
- Mode  :character   Mode  :character   Median :  0.0   Median : 16.00  
-                                       Mean   :  2.3   Mean   : 38.76  
-                                       3rd Qu.:  0.0   3rd Qu.: 37.75  
-                                       Max.   :214.0   Max.   :755.00  
-                                       NA's   :98      NA's   :115     
-      ECV           Group_size       Gestation         Weaning      
- Min.   :  1.63   Min.   : 1.000   Min.   : 59.99   Min.   :  40.0  
- 1st Qu.: 11.82   1st Qu.: 3.125   1st Qu.:138.35   1st Qu.: 121.7  
- Median : 58.55   Median : 7.500   Median :166.03   Median : 234.2  
- Mean   : 68.49   Mean   :13.263   Mean   :164.50   Mean   : 311.1  
- 3rd Qu.: 86.20   3rd Qu.:18.225   3rd Qu.:183.26   3rd Qu.: 388.8  
- Max.   :491.27   Max.   :91.200   Max.   :274.78   Max.   :1260.8  
- NA's   :117      NA's   :114      NA's   :161      NA's   :185     
-   Longevity       Sex_maturity      Body_mass         Maternal_investment
- Min.   : 103.0   Min.   : 283.2   Min.   :    31.23   Min.   :  99.99    
- 1st Qu.: 216.0   1st Qu.: 701.5   1st Qu.:   739.44   1st Qu.: 255.88    
- Median : 301.2   Median :1427.2   Median :  3553.50   Median : 401.35    
- Mean   : 332.0   Mean   :1480.2   Mean   :  6795.18   Mean   : 478.64    
- 3rd Qu.: 393.3   3rd Qu.:1894.1   3rd Qu.:  7465.00   3rd Qu.: 592.22    
- Max.   :1470.0   Max.   :5582.9   Max.   :130000.00   Max.   :1492.30    
- NA's   :181      NA's   :194      NA's   :63          NA's   :197        
- Repro_lifespan 
- Min.   : 2512  
- 1st Qu.: 6126  
- Median : 8326  
- Mean   : 9065  
- 3rd Qu.:10717  
- Max.   :39130  
- NA's   :206    </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first way</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(d,<span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(d)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#first way</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(d,<span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Data summary</caption>
@@ -452,11 +418,11 @@ dbl (11): Social_learning, Research_effort, ECV, Group_size, Gestation, Wean...
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#another way </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span> <span class="fu">favstats</span>(.x), <span class="at">.id =</span> <span class="st">"Variable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#another way </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span> <span class="fu">favstats</span>(.x), <span class="at">.id =</span> <span class="st">"Variable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 Variable      min        Q1   median         Q3       max
 ...1      Social_learning    0.000    0.0000    0.000     0.0000    214.00
@@ -489,11 +455,11 @@ dbl (11): Social_learning, Research_effort, ECV, Group_size, Gestation, Wean...
 <li>From this dataset, plot brain size (<strong>ECV</strong>) as a function of social group size (<strong>Group_size</strong>), longevity (<strong>Longevity</strong>), juvenile period length (<strong>Weaning</strong>), and reproductive lifespan (<strong>Repro_lifespan</strong>).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Group_size)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Longevity)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Weaning)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Repro_lifespan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Group_size)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Longevity)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Weaning)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>d<span class="sc">$</span>ECV,<span class="at">x=</span>d<span class="sc">$</span>Repro_lifespan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -510,34 +476,34 @@ dbl (11): Social_learning, Research_effort, ECV, Group_size, Gestation, Wean...
 <p><strong>HINT</strong>: You will need to remove rows from your dataset where one of these variables is missing.</p>
 </blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(ECV, Group_size)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ssx<span class="ot">&lt;-</span> <span class="fu">sum</span>((d<span class="sc">$</span>Group_size <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>Group_size))<span class="sc">^</span><span class="dv">2</span>) </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ssxy<span class="ot">&lt;-</span><span class="fu">sum</span>((d<span class="sc">$</span>Group_size <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>Group_size))<span class="sc">*</span>(d<span class="sc">$</span>ECV <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>ECV)))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#(length(z$height)-1)</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ssxy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(ECV, Group_size)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ssx<span class="ot">&lt;-</span> <span class="fu">sum</span>((d<span class="sc">$</span>Group_size <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>Group_size))<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ssxy<span class="ot">&lt;-</span><span class="fu">sum</span>((d<span class="sc">$</span>Group_size <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>Group_size))<span class="sc">*</span>(d<span class="sc">$</span>ECV <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>ECV)))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#(length(z$height)-1)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ssxy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 72805.19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ssx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ssx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29558.7</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>beta1<span class="ot">&lt;-</span>ssxy<span class="sc">/</span>ssx</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>beta1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>beta1<span class="ot">&lt;-</span>ssxy<span class="sc">/</span>ssx</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>beta1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.463071</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#another way</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>gr <span class="ot">&lt;-</span> d<span class="sc">$</span>Group_size</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ecv <span class="ot">&lt;-</span> d<span class="sc">$</span>ECV</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(gr)  <span class="co"># or length(h)</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>(beta1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(gr, ecv) <span class="sc">*</span> (<span class="fu">sd</span>(ecv)<span class="sc">/</span><span class="fu">sd</span>(gr)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#another way</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>gr <span class="ot">&lt;-</span> d<span class="sc">$</span>Group_size</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>ecv <span class="ot">&lt;-</span> d<span class="sc">$</span>ECV</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(gr)  <span class="co"># or length(h)</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>(beta1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(gr, ecv) <span class="sc">*</span> (<span class="fu">sd</span>(ecv)<span class="sc">/</span><span class="fu">sd</span>(gr)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.463071</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>b0<span class="ot">&lt;-</span><span class="fu">mean</span>(d<span class="sc">$</span>ECV) <span class="sc">-</span> (beta1<span class="sc">*</span><span class="fu">mean</span>(d<span class="sc">$</span>Group_size))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>b0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>b0<span class="ot">&lt;-</span><span class="fu">mean</span>(d<span class="sc">$</span>ECV) <span class="sc">-</span> (beta1<span class="sc">*</span><span class="fu">mean</span>(d<span class="sc">$</span>Group_size))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>b0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 30.35652</code></pre>
 </div>
@@ -548,8 +514,8 @@ dbl (11): Social_learning, Research_effort, ECV, Group_size, Gestation, Wean...
 <li>Confirm that you get the same results using the&nbsp;<code>lm()</code>&nbsp;function.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>m_all <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> d)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>m_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>m_all <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> d)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>m_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -567,18 +533,18 @@ Coefficients:
 <li>Repeat the analysis above for three different major radiations of primates - “catarrhines”, “platyrrhines”, and “strepsirhines”) separately. These are stored in the variable&nbsp;<strong>Taxonomic_group</strong>. Do your regression coefficients differ among groups? How might you determine this?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'broom' was built under R version 4.3.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Catarrhini"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Platyrrhini"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Strepsirhini"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>c<span class="sc">$</span>ECV,<span class="at">x=</span>c<span class="sc">$</span>Group_size,<span class="at">main=</span><span class="st">"Catarrhini"</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>p<span class="sc">$</span>ECV,<span class="at">x=</span>p<span class="sc">$</span>Group_size, <span class="at">main=</span><span class="st">"Platyrrhini"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>s<span class="sc">$</span>ECV,<span class="at">x=</span>s<span class="sc">$</span>Group_size, <span class="at">main=</span><span class="st">"Strepsirhini"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Catarrhini"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Platyrrhini"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">filter</span>(Taxonomic_group <span class="sc">==</span> <span class="st">"Strepsirhini"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>c<span class="sc">$</span>ECV,<span class="at">x=</span>c<span class="sc">$</span>Group_size,<span class="at">main=</span><span class="st">"Catarrhini"</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>p<span class="sc">$</span>ECV,<span class="at">x=</span>p<span class="sc">$</span>Group_size, <span class="at">main=</span><span class="st">"Platyrrhini"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y=</span>s<span class="sc">$</span>ECV,<span class="at">x=</span>s<span class="sc">$</span>Group_size, <span class="at">main=</span><span class="st">"Strepsirhini"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -586,10 +552,10 @@ Coefficients:
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m_catr<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>c)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>m_plat<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>p)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>m_strep<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>s)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m_catr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>m_catr<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>c)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>m_plat<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>p)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>m_strep<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">formula =</span> ECV <span class="sc">~</span> Group_size, <span class="at">data =</span>s)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_catr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic     p.value
@@ -597,27 +563,9 @@ Coefficients:
 1 (Intercept)    83.4     14.9        5.59 0.000000438
 2 Group_size      1.15     0.579      1.98 0.0518     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_catr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  term        estimate std.error statistic     p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-1 (Intercept)    83.4     14.9        5.59 0.000000438
-2 Group_size      1.15     0.579      1.98 0.0518     </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>m_catr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = ECV ~ Group_size, data = c)
-
-Coefficients:
-(Intercept)   Group_size  
-     83.421        1.146  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Catarrhini =</span> m_catr, <span class="at">Platyrrhini =</span> m_plat, <span class="at">Strepsirrhini =</span> m_strep, <span class="at">All =</span> m_all)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="ot">&lt;-</span> <span class="fu">map_df</span>(models, tidy, <span class="at">.id =</span> <span class="st">"Taxonomic_Group"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>results_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Catarrhini =</span> m_catr, <span class="at">Platyrrhini =</span> m_plat, <span class="at">Strepsirrhini =</span> m_strep, <span class="at">All =</span> m_all)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="ot">&lt;-</span> <span class="fu">map_df</span>(models, tidy, <span class="at">.id =</span> <span class="st">"Taxonomic_Group"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>results_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 6
   Taxonomic_Group term        estimate std.error statistic  p.value
@@ -643,25 +591,25 @@ Coefficients:
 <li>For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, and the&nbsp;<em>p</em>&nbsp;value associated with this coefficient by hand. Also extract this same information from the results of running the&nbsp;<code>lm()</code>&nbsp;function.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>predicted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_all)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> predicted_values <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>ECV)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>b1_std_err<span class="ot">&lt;-</span><span class="fu">sqrt</span>(SSR<span class="sc">/</span>((n<span class="dv">-2</span>)<span class="sc">*</span>ssx))</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>b1_std_err</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>predicted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_all)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> predicted_values <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>ECV)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>b1_std_err<span class="ot">&lt;-</span><span class="fu">sqrt</span>(SSR<span class="sc">/</span>((n<span class="dv">-2</span>)<span class="sc">*</span>ssx))</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>b1_std_err</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2017827</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span>beta1<span class="sc">/</span>b1_std_err</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span>beta1<span class="sc">/</span>b1_std_err</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12.20656</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#it didnot work out, I could not get the right standard error</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#it didnot work out, I could not get the right standard error</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -669,32 +617,32 @@ Coefficients:
 1 (Intercept)    30.4      6.80       4.47 1.56e- 5
 2 Group_size      2.46     0.351      7.02 7.26e-11</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>se_b1<span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(m_all) <span class="sc">|&gt;</span> <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(std.error)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> beta1<span class="sc">/</span>se_b1</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>se_b1<span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(m_all) <span class="sc">|&gt;</span> <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(std.error)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> beta1<span class="sc">/</span>se_b1</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.021176</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">=</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(t, <span class="at">df=</span>n<span class="dv">-2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">=</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(t, <span class="at">df=</span>n<span class="dv">-2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.259435e-11</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> beta1 <span class="sc">-</span> <span class="fu">abs</span>(<span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)) <span class="sc">*</span> se_b1</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> beta1 <span class="sc">+</span> (<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> se_b1)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">&lt;-</span> <span class="fu">cbind</span>(lower, upper)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> beta1 <span class="sc">-</span> <span class="fu">abs</span>(<span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)) <span class="sc">*</span> se_b1</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> beta1 <span class="sc">+</span> (<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> se_b1)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">&lt;-</span> <span class="fu">cbind</span>(lower, upper)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        lower    upper
 [1,] 1.769874 3.156269</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
 (Intercept) 16.926896 43.786153
 Group_size   1.769874  3.156269</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -709,9 +657,10 @@ Group_size   1.769874  3.156269</code></pre>
 <ul>
 <li>Use a permutation approach with 1000 permutations to generate a null sampling distribution for the&nbsp;<strong>slope coefficient</strong>. What is it that you need to permute? What is the p value associated with your original slope coefficient? You can use either the quantile method (i.e., using quantiles from the actual permutation-based null sampling distribution) or a theory-based method (i.e., using the standard deviation of the permutation-based null sampling distribution as the estimate of the standard error, along with a normal or t distribution), or both, to calculate this p value.</li>
 </ul>
-<p>Null hypotheses -&gt; no relation between slope and</p>
+<p>Null hypotheses -&gt; no relation between Group_size and Brain Size.</p>
+<p>To destroy association with Group Size and Brain size, we randomly take 1000 Group size value [not related with brain size, kind of shuffling the Group size values]. After that, modeling the linear regression, getting slope and intercept value for 1000 permutation - slope distribution - around zero - showing no association!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -719,19 +668,29 @@ Group_size   1.769874  3.156269</code></pre>
 1 (Intercept)    30.4      6.80       4.47 1.56e- 5
 2 Group_size      2.46     0.351      7.02 7.26e-11</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>obs_slope <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(m_all) <span class="sc">|&gt;</span> <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span> (estimate)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>nperm <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="fu">do</span>(nperm)<span class="sc">*</span>{</span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  d_new <span class="ot">&lt;-</span>d</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  d_new<span class="sc">$</span>Group_size <span class="ot">&lt;-</span><span class="fu">sample</span>(d_new<span class="sc">$</span>Group_size)</span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  m<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">data =</span> d_new, ECV <span class="sc">~</span> Group_size)</span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(m) <span class="sc">|&gt;</span> </span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm<span class="sc">$</span>result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>obs_slope <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(m_all) <span class="sc">|&gt;</span> <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span> (estimate)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>nperm <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="fu">do</span>(nperm)<span class="sc">*</span>{</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  d_new <span class="ot">&lt;-</span>d</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  d_new<span class="sc">$</span>Group_size <span class="ot">&lt;-</span><span class="fu">sample</span>(d_new<span class="sc">$</span>Group_size)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  m<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="at">data =</span> d_new, ECV <span class="sc">~</span> Group_size)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(m) <span class="sc">|&gt;</span> </span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(estimate)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(perm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      result
+1  0.3541016
+2 -0.3481280
+3 -0.3111537
+4  0.4552630
+5 -0.4094597
+6 -0.3648797</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(perm<span class="sc">$</span>result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -739,10 +698,10 @@ Group_size   1.769874  3.156269</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>perm.se<span class="ot">&lt;-</span><span class="fu">sd</span>(perm<span class="sc">$</span>result)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>perm) <span class="sc">+</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>result))<span class="sc">+</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obs_slope, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>perm.se<span class="ot">&lt;-</span><span class="fu">sd</span>(perm<span class="sc">$</span>result)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>perm) <span class="sc">+</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>result))<span class="sc">+</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obs_slope, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -753,8 +712,85 @@ Group_size   1.769874  3.156269</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">sum</span>(perm<span class="sc">$</span>result <span class="sc">&gt;</span> <span class="fu">abs</span>(obs_slope) <span class="sc">|</span> perm<span class="sc">$</span>result <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">*</span><span class="fu">abs</span>(obs_slope))<span class="sc">/</span>nperm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">sum</span>(perm <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> <span class="fu">abs</span>(obs_slope) <span class="sc">|</span> perm <span class="sc">&gt;</span> <span class="fu">abs</span>(obs_slope))<span class="sc">/</span>nperm</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="do">####another way</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'infer'
+
+The following objects are masked from 'package:mosaic':
+
+    prop_test, t_test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>permuted.slope <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># specify model</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">specify</span>(ECV <span class="sc">~</span> Group_size) <span class="sc">|&gt;</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use a null hypothesis of independence</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate permutation replicates</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calculate the slope statistic</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"slope"</span>)</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>(p.value <span class="ot">&lt;-</span> permuted.slope <span class="sc">|&gt;</span> <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_slope, <span class="at">direction =</span> <span class="st">"both"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Please be cautious in reporting a p-value of 0. This result is an approximation
+based on the number of `reps` chosen in the `generate()` step.
+ℹ See `get_p_value()` (`?infer::get_p_value()`) for more information.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1       0</code></pre>
+</div>
+</div>
+</section>
+<section id="step-8" class="level3">
+<h3 class="anchored" data-anchor-id="step-8"><strong>Step 8</strong></h3>
+<ul>
+<li>Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error). Do these CIs suggest that your slope coefficient is different from zero?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>confidence_level <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> alpha</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>p_lower <span class="ot">&lt;-</span> alpha<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>p_upper <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>degrees_of_freedom <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> <span class="fu">qt</span>(p_upper, <span class="at">df =</span> degrees_of_freedom)</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>perm.se<span class="ot">&lt;-</span><span class="fu">sd</span>(perm<span class="sc">$</span>result)</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>perm.se</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3887391</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#CI based on t distribution</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">=</span> <span class="fu">mean</span>(perm<span class="sc">$</span>result) <span class="sc">-</span> perm.se <span class="sc">*</span> critical_value </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">=</span> <span class="fu">mean</span>(perm<span class="sc">$</span>result) <span class="sc">+</span> perm.se <span class="sc">*</span>critical_value </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>CI_perm<span class="ot">&lt;-</span><span class="fu">cbind</span>(lower,upper)</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>CI_perm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          lower     upper
+[1,] -0.7738606 0.7624464</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(perm<span class="sc">$</span>result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.005707139</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#CI based on quantile method</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>perm.lower <span class="ot">=</span> <span class="fu">quantile</span>(perm<span class="sc">$</span>result,<span class="fl">0.025</span>) </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>perm.upper <span class="ot">=</span> <span class="fu">quantile</span>(perm<span class="sc">$</span>result, <span class="fl">0.975</span>)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>CI_qperm<span class="ot">&lt;-</span><span class="fu">cbind</span>(perm.lower,perm.upper)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>CI_qperm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     perm.lower perm.upper
+2.5% -0.6886254  0.8442436</code></pre>
+</div>
+</div>
+<p>CI range suggests that slope distribution is around zero.</p>
 </section>
 </section>
 

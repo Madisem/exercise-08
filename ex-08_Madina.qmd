@@ -19,7 +19,7 @@ library(mosaic)
 library(skimr)
 d<-read_csv("Street_et_al_2017.csv", col_names = TRUE)
 head(d)
-summary(d)
+#summary(d)
 #first way
 skim(d,where(is.numeric))
 
@@ -98,9 +98,7 @@ plot(y=s$ECV,x=s$Group_size, main="Strepsirhini")
 m_catr<-lm(formula = ECV ~ Group_size, data =c)
 m_plat<-lm(formula = ECV ~ Group_size, data =p)
 m_strep<-lm(formula = ECV ~ Group_size, data =s)
-broom::tidy(m_catr)
 tidy(m_catr)
-m_catr
 
 models <- list(Catarrhini = m_catr, Platyrrhini = m_plat, Strepsirrhini = m_strep, All = m_all)
 results_table <- map_df(models, tidy, .id = "Taxonomic_Group")
@@ -154,7 +152,9 @@ tidy(m_all)
 
 -   Use a permutation approach with 1000 permutations to generate a null sampling distribution for the **slope coefficient**. What is it that you need to permute? What is the p value associated with your original slope coefficient? You can use either the quantile method (i.e., using quantiles from the actual permutation-based null sampling distribution) or a theory-based method (i.e., using the standard deviation of the permutation-based null sampling distribution as the estimate of the standard error, along with a normal or t distribution), or both, to calculate this p value.
 
-Null hypotheses -\> no relation between slope and
+Null hypotheses -\> no relation between Group_size and Brain Size.
+
+To destroy association with Group Size and Brain size, we randomly take 1000 Group size value \[not related with brain size, kind of shuffling the Group size values\]. After that, modeling the linear regression, getting slope and intercept value for 1000 permutation - slope distribution - around zero - showing no association!
 
 ```{r}
 broom::tidy(m_all)
@@ -170,10 +170,55 @@ perm <- do(nperm)*{
     filter(term == "Group_size") |> 
     pull(estimate)
 }
+head(perm)
 hist(perm$result)
 perm.se<-sd(perm$result)
 ggplot(data=perm) +
   geom_histogram(aes(x=result))+
   geom_vline(xintercept = obs_slope, color = "red")
-p<-sum(perm$result > abs(obs_slope) | perm$result < -1*abs(obs_slope))/nperm
+
+p <- sum(perm < -1 * abs(obs_slope) | perm > abs(obs_slope))/nperm
+p
+
+####another way
+library(infer)
+permuted.slope <- d |>
+    # specify model
+specify(ECV ~ Group_size) |>
+    # use a null hypothesis of independence
+hypothesize(null = "independence") |>
+    # generate permutation replicates
+generate(reps = 1000, type = "permute") |>
+    # calculate the slope statistic
+calculate(stat = "slope")
+(p.value <- permuted.slope |> get_p_value(obs_stat = obs_slope, direction = "both"))
 ```
+
+### **Step 8**
+
+-   Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error). Do these CIs suggest that your slope coefficient is different from zero?
+
+```{r}
+alpha <- 0.05
+confidence_level <- 1 - alpha
+p_lower <- alpha/2
+p_upper <- 1 - (alpha/2)
+degrees_of_freedom <- nrow(d) - 2
+critical_value <- qt(p_upper, df = degrees_of_freedom)
+perm.se<-sd(perm$result)
+perm.se
+#CI based on t distribution
+lower = mean(perm$result) - perm.se * critical_value 
+upper = mean(perm$result) + perm.se *critical_value 
+CI_perm<-cbind(lower,upper)
+CI_perm
+mean(perm$result)
+ 
+#CI based on quantile method
+perm.lower = quantile(perm$result,0.025) 
+perm.upper = quantile(perm$result, 0.975)
+CI_qperm<-cbind(perm.lower,perm.upper)
+CI_qperm
+```
+
+CI range suggests that slope distribution is around zero.
