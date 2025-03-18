@@ -14,6 +14,7 @@ editor_options:
 -   Do a quick exploratory data analysis where you generate the five-number summary (median, minimum and maximum and 1st and 3rd quartile values), plus mean and standard deviation, for each quantitative variable.
 
 ```{r}
+library(tidyverse)
 library(mosaic)
 library(skimr)
 d<-read_csv("Street_et_al_2017.csv", col_names = TRUE)
@@ -125,9 +126,9 @@ SSR <- sum(residuals^2)
 
 
 b1_std_err<-sqrt(SSR/((n-2)*ssx))
-b1_std_er
+b1_std_err
 
-t =beta1/b1_std_er
+t =beta1/b1_std_err
 t
 #it didnot work out, I could not get the right standard error
 
@@ -163,13 +164,13 @@ library(mosaic)
 nperm <- 1000
 perm <- do(nperm)*{
   d_new <-d
-  d_new$weight <-sample(d_new$weight)
-  m<-lm(data = d_new, height ~ weight)
+  d_new$Group_size <-sample(d_new$Group_size)
+  m<-lm(data = d_new, ECV ~ Group_size)
   broom::tidy(m) |> 
-    filter(term == "weight") |> 
+    filter(term == "Group_size") |> 
     pull(estimate)
 }
-historgram(perm$result)
+hist(perm$result)
 perm.se<-sd(perm$result)
 ggplot(data=perm) +
   geom_histogram(aes(x=result))+
