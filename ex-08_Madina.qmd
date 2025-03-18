@@ -1,0 +1,178 @@
+---
+title: "ex-08"
+author: "Madina"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+##  **Step 1**
+
+-   Using the {tidyverse} `read_csv()` function, load the “Street_et_al_2017.csv” dataset from [this URL](https://raw.githubusercontent.com/difiore/ada-datasets/main/Street_et_al_2017.csv) as a “tibble” named **d**.
+
+-   Do a quick exploratory data analysis where you generate the five-number summary (median, minimum and maximum and 1st and 3rd quartile values), plus mean and standard deviation, for each quantitative variable.
+
+```{r}
+library(mosaic)
+library(skimr)
+d<-read_csv("Street_et_al_2017.csv", col_names = TRUE)
+head(d)
+summary(d)
+#first way
+skim(d,where(is.numeric))
+
+#another way 
+library(purrr)
+d |>
+  select(where(is.numeric)) |>
+  map_df(~ favstats(.x), .id = "Variable")
+ 
+```
+
+**Step 2**
+
+-   From this dataset, plot brain size (**ECV**) as a function of social group size (**Group_size**), longevity (**Longevity**), juvenile period length (**Weaning**), and reproductive lifespan (**Repro_lifespan**).
+
+```{r}
+par(mfrow=c(2,2))
+plot(y=d$ECV,x=d$Group_size)
+plot(y=d$ECV,x=d$Longevity)
+plot(y=d$ECV,x=d$Weaning)
+plot(y=d$ECV,x=d$Repro_lifespan)
+```
+
+**Step 3**
+
+-   Derive by hand the ordinary least squares regression coefficients  and  for ECV as a function of social group size.
+
+> **HINT**: You will need to remove rows from your dataset where one of these variables is missing.
+
+```{r}
+library(dplyr)
+d <- d |> drop_na(ECV, Group_size)
+ssx<- sum((d$Group_size - mean(d$Group_size))^2) 
+ssxy<-sum((d$Group_size - mean(d$Group_size))*(d$ECV - mean(d$ECV)))
+#(length(z$height)-1)
+ssxy
+ssx
+beta1<-ssxy/ssx
+beta1
+
+#another way
+gr <- d$Group_size
+ecv <- d$ECV
+n <- length(gr)  # or length(h)
+(beta1 <- cor(gr, ecv) * (sd(ecv)/sd(gr)))
+
+b0<-mean(d$ECV) - (beta1*mean(d$Group_size))
+b0
+```
+
+### **Step 4**
+
+-   Confirm that you get the same results using the `lm()` function.
+
+```{r}
+m_all <- lm(ECV ~ Group_size, data = d)
+m_all
+```
+
+### **Step 5**
+
+-   Repeat the analysis above for three different major radiations of primates - “catarrhines”, “platyrrhines”, and “strepsirhines”) separately. These are stored in the variable **Taxonomic_group**. Do your regression coefficients differ among groups? How might you determine this?
+
+```{r}
+library(broom)
+
+c <- d |> filter(Taxonomic_group == "Catarrhini")
+p <- d |> filter(Taxonomic_group == "Platyrrhini")
+s <- d |> filter(Taxonomic_group == "Strepsirhini")
+
+par(mfrow=c(3,1))
+plot(y=c$ECV,x=c$Group_size,main="Catarrhini")
+plot(y=p$ECV,x=p$Group_size, main="Platyrrhini")
+plot(y=s$ECV,x=s$Group_size, main="Strepsirhini")
+
+m_catr<-lm(formula = ECV ~ Group_size, data =c)
+m_plat<-lm(formula = ECV ~ Group_size, data =p)
+m_strep<-lm(formula = ECV ~ Group_size, data =s)
+broom::tidy(m_catr)
+tidy(m_catr)
+m_catr
+
+models <- list(Catarrhini = m_catr, Platyrrhini = m_plat, Strepsirrhini = m_strep, All = m_all)
+results_table <- map_df(models, tidy, .id = "Taxonomic_Group")
+results_table
+```
+
+Yes, regression coefficients are different in groups. Catarrhinies have highest intercept value, meaning that when x=0, the brain size is 80. Large brain size considerable to other groups. While the slope is lowest, showing that by group size increase the brain size increase only slowly within that group.
+
+While Strepsirrhinies have lowest intercept value \[small brain size\] and slope value is also low.
+
+Plattyrrhines show increase of brain size by group size.
+
+In all together, there is clear rapid change of the value of brain size with the group the size increase. \[high slope value\]
+
+### **Step 6**
+
+-   For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, and the *p* value associated with this coefficient by hand. Also extract this same information from the results of running the `lm()` function.
+
+```{r}
+predicted_values <- predict(m_all)
+residuals <- predicted_values - mean(d$ECV)
+SSR <- sum(residuals^2)
+
+
+b1_std_err<-sqrt(SSR/((n-2)*ssx))
+b1_std_er
+
+t =beta1/b1_std_er
+t
+#it didnot work out, I could not get the right standard error
+
+
+tidy(m_all)
+se_b1<- broom::tidy(m_all) |> filter(term == "Group_size") |> pull(std.error)
+t = beta1/se_b1
+t
+p_val = 2*pt(t, df=n-2, lower.tail = FALSE)
+p_val
+
+ 
+lower <- beta1 - abs(qt(0.025, df = n - 2)) * se_b1
+upper <- beta1 + (qt(0.975, df = n - 2) * se_b1)
+CI <- cbind(lower, upper)
+CI
+confint(m_all)
+tidy(m_all)
+
+```
+
+### **Step 7**
+
+-   Use a permutation approach with 1000 permutations to generate a null sampling distribution for the **slope coefficient**. What is it that you need to permute? What is the p value associated with your original slope coefficient? You can use either the quantile method (i.e., using quantiles from the actual permutation-based null sampling distribution) or a theory-based method (i.e., using the standard deviation of the permutation-based null sampling distribution as the estimate of the standard error, along with a normal or t distribution), or both, to calculate this p value.
+
+Null hypotheses -\> no relation between slope and
+
+```{r}
+broom::tidy(m_all)
+obs_slope <- broom::tidy(m_all) |> filter(term == "Group_size") |> pull (estimate)
+
+library(mosaic)
+nperm <- 1000
+perm <- do(nperm)*{
+  d_new <-d
+  d_new$weight <-sample(d_new$weight)
+  m<-lm(data = d_new, height ~ weight)
+  broom::tidy(m) |> 
+    filter(term == "weight") |> 
+    pull(estimate)
+}
+historgram(perm$result)
+perm.se<-sd(perm$result)
+ggplot(data=perm) +
+  geom_histogram(aes(x=result))+
+  geom_vline(xintercept = obs_slope, color = "red")
+p<-sum(perm$result > abs(obs_slope) | perm$result < -1*abs(obs_slope))/nperm
+```
